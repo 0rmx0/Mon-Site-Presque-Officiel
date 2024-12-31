@@ -8,25 +8,29 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title top-title">Bienvenue dans le Monde Magique!</h1>
-        <video class="video" autoplay muted loop>
+        <h1 class="title top-title">Bienvenue les Gogos !</h1>
+        <video id="video" class="video" autoplay loop>
             <source src="video.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
-        <h1 class="title bottom-title">Rêvez, Croyez, Explorez!</h1>
-        <p class="counter">Vous êtes le <strong id="visit-count">...</strong>ème Gogo à visiter ce site!</p>
+        <h1 class="title bottom-title">Gros bisous!</h1>        
     </div>
     <script>
-        // Charger le compteur de visites depuis le serveur
-        fetch('counter.php')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('visit-count').textContent = data;
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement du compteur :', error);
-                document.getElementById('visit-count').textContent = 'N/A';
-            });
+        const video = document.getElementById('video');
+
+        // Forcer le son activé lors du chargement
+        window.addEventListener('load', () => {
+            video.muted = false; // Assurez-vous que le son est activé
+            const playPromise = video.play();
+
+            // Si le navigateur bloque, afficher un message ou proposer une solution
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.error('Autoplay avec son a été bloqué :', error);
+                    alert("Cliquez sur la vidéo pour activer le son !");
+                });
+            }
+        });
     </script>
 </body>
 </html>
