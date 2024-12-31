@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+</html><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -13,24 +13,35 @@
             <source src="video.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
-        <h1 class="title bottom-title">Gros bisous!</h1>        
+        <h1 class="title bottom-title">Gros bisous!</h1>         
     </div>
     <script>
         const video = document.getElementById('video');
 
-        // Forcer le son activé lors du chargement
-        window.addEventListener('load', () => {
-            video.muted = false; // Assurez-vous que le son est activé
-            const playPromise = video.play();
+        // Tenter de lire la vidéo avec le son activé
+        video.muted = false;
 
-            // Si le navigateur bloque, afficher un message ou proposer une solution
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.error('Autoplay avec son a été bloqué :', error);
-                    alert("Cliquez sur la vidéo pour activer le son !");
-                });
-            }
+        video.play().catch(error => {
+            console.warn('Lecture automatique avec son bloquée, rechargement en mode silencieux...', error);
+
+            // Recharger la vidéo avec le son désactivé
+            video.muted = true;
+            video.load(); // Recharge la vidéo
+            video.play().catch(playError => {
+                console.error('Impossible de lire la vidéo même sans son :', playError);
+            });
         });
+
+        // Charger le compteur de visites depuis le serveur
+        fetch('counter.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('visit-count').textContent = data;
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement du compteur :', error);
+                document.getElementById('visit-count').textContent = 'N/A';
+            });
     </script>
 </body>
 </html>
