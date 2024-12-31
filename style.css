@@ -45,3 +45,22 @@ body {
     75% { color: green; }
     100% { color: blue; }
 }
+.sound-button {
+    font-size: 1.2em;
+    color: white;
+    background: #ff00cc;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-shadow: 2px 2px 5px magenta;
+    animation: rainbow-text 3s infinite alternate;
+}
+
+.sound-button:hover {
+    background: yellow;
+    color: #ff00cc;
+    border-color: magenta;
+    text-shadow: 2px 2px 5px red;
+}
